@@ -1,12 +1,11 @@
 # VPC
 # https://www.terraform.io/docs/providers/aws/r/vpc.html
 resource "aws_vpc" "terraformVpc" {
-  cidr_block = "10.1.0.0/16"
+  cidr_block = var.VPC_CIDR
   enable_dns_support = true
   enable_dns_hostnames = true
-
   tags = {
-    "Name" = "terraformVpc"
+    "Name" = "${var.PJPrefix}-vpc"
   }
 }
 
@@ -19,10 +18,10 @@ resource "aws_subnet" "PublicSubnetA" {
   # Subnetを作成するAZ
   availability_zone = "ap-northeast-1a"
 
-  cidr_block        = "10.1.10.0/24"
+  cidr_block        = var.PublicSubnetACIDR
 
   tags = {
-    "Name" = "PublicSubnetA"
+    "Name" = "${var.PJPrefix}-PublicSubnetA"
   }
 }
 
@@ -31,10 +30,10 @@ resource "aws_subnet" "PublicSubnetC" {
 
   availability_zone = "ap-northeast-1c"
 
-  cidr_block        = "10.1.20.0/24"
+  cidr_block        = var.PublicSubnetCCIDR
 
   tags = {
-    "Name" = "PublicSubnetC"
+    "Name" = "${var.PJPrefix}-PublicSubnetC"
   }
 }
 
@@ -43,10 +42,10 @@ resource "aws_subnet" "PrivateSubnetA" {
   vpc_id = "${aws_vpc.terraformVpc.id}"
 
   availability_zone = "ap-northeast-1a"
-  cidr_block        = "10.1.100.0/24"
+  cidr_block        = var.PrivateSubnetACIDR
 
   tags = {
-    "Name" = "PrivateSubnetA"
+    "Name" = "${var.PJPrefix}-PrivateSubnetA"
   }
 }
 
@@ -54,10 +53,10 @@ resource "aws_subnet" "PrivateSubnetC" {
   vpc_id = "${aws_vpc.terraformVpc.id}"
 
   availability_zone = "ap-northeast-1c"
-  cidr_block        = "10.1.200.0/24"
+  cidr_block        = var.PrivateSubnetCCIDR
 
   tags = {
-    "Name" = "PrivateSubnetC"
+    "Name" = "${var.PJPrefix}-PrivateSubnetC"
   }
 }
 
@@ -67,7 +66,7 @@ resource "aws_internet_gateway" "terraformInternetGateway" {
   vpc_id = "${aws_vpc.terraformVpc.id}"
 
   tags = {
-    "Name" = "terraformInternetGateway"
+    "Name" = "${var.PJPrefix}-igw"
   }
 }
 
@@ -77,10 +76,9 @@ resource "aws_route_table" "rtb_public" {
   vpc_id = "${aws_vpc.terraformVpc.id}"
 
   tags = {
-    "Name" = "terraformPublicRouteTable"
+    "Name" = "${var.PJPrefix}-rtb-public"
   }
 }
-# ここまではOK
 
 # Route　routeテーブルとVPCの関連付け
 # https://www.terraform.io/docs/providers/aws/r/route.html

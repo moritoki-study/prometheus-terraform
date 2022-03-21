@@ -1,29 +1,33 @@
 # ここはインスタンスの設定。自分の好みの設定に変える。
+data "aws_ssm_parameter" "amzn2_latest" {
+  name = "/aws/service/ami-amazon-linux-latest/amzn2-ami-kernel-5.10-hvm-x86_64-gp2"
+}
+
 # aws_instanceは固定
 # 他にも設定可能
 resource "aws_instance" "PrometheusEC2" {
-  ami = "ami-08a8688fb7eacb171"
-  instance_type = "t2.micro"
+  ami = data.aws_ssm_parameter.amzn2_latest.value
+  instance_type = var.InstanceType
   subnet_id                   = aws_subnet.PublicSubnetA.id
   vpc_security_group_ids = [aws_security_group.terraform_prometheus_SG.id]
   associate_public_ip_address = true
-  private_ip = "10.1.10.100"
-  key_name = "rsa"
+  private_ip = var.PrometheusEC2_PrivateIpAddress
+  key_name = var.KeyName
   tags = {
-    "Name" = "prometheus.host"
+    "Name" = var.PrometheusEC2_tag_name
   }
 }
 
 resource "aws_instance" "TestHttpserverEC2" {
-  ami = "ami-08a8688fb7eacb171"
-  instance_type = "t2.micro"
+  ami = data.aws_ssm_parameter.amzn2_latest.value
+  instance_type = var.InstanceType
   subnet_id                   = aws_subnet.PublicSubnetA.id
   vpc_security_group_ids = [aws_security_group.terraform_prometheus_SG.id]
   associate_public_ip_address = true
-  private_ip = "10.1.10.110"
-  key_name = "rsa"
+  private_ip = var.TestHttpserverEC2_PrivateIpAddress
+  key_name = var.KeyName
   tags = {
-    "Name" = "testhttpserver.host"
+    "Name" = var.TestHttpserverEC2_tag_name
   }
 }
 

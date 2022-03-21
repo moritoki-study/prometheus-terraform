@@ -18,9 +18,7 @@ resource "aws_security_group_rule" "http_ingress" {
   from_port   = 80
   to_port     = 80
   protocol    = "tcp"
-  cidr_blocks = [
-    "0.0.0.0/0"
-  ]
+  cidr_blocks = "${var.MyIP}"
 
   # ここでweb_serverセキュリティグループに紐付け
   security_group_id = "${aws_security_group.terraform_prometheus_SG.id}"
@@ -32,9 +30,7 @@ resource "aws_security_group_rule" "ssh_ingress" {
   from_port   = 22
   to_port     = 22
   protocol    = "tcp"
-  cidr_blocks = [
-    "0.0.0.0/0"
-  ]
+  cidr_blocks = "${var.MyIP}"
 
   # ここでweb_serverセキュリティグループに紐付け
   security_group_id = "${aws_security_group.terraform_prometheus_SG.id}"
@@ -46,9 +42,7 @@ resource "aws_security_group_rule" "prometheus_ingress" {
   from_port   = 9090
   to_port     = 9090
   protocol    = "tcp"
-  cidr_blocks = [
-    "0.0.0.0/0"
-  ]
+  cidr_blocks = "${var.MyIP}"
 
   # ここでweb_serverセキュリティグループに紐付け
   security_group_id = "${aws_security_group.terraform_prometheus_SG.id}"
@@ -60,9 +54,7 @@ resource "aws_security_group_rule" "node_exporter_ingress" {
   from_port   = 9100
   to_port     = 9100
   protocol    = "tcp"
-  cidr_blocks = [
-    "0.0.0.0/0"
-  ]
+  cidr_blocks = "${var.MyIP}"
 
   # ここでweb_serverセキュリティグループに紐付け
   security_group_id = "${aws_security_group.terraform_prometheus_SG.id}"
@@ -74,9 +66,7 @@ resource "aws_security_group_rule" "grafana_ingress" {
   from_port   = 3000
   to_port     = 3000
   protocol    = "tcp"
-  cidr_blocks = [
-    "0.0.0.0/0"
-  ]
+  cidr_blocks = "${var.MyIP}"
 
   # ここでweb_serverセキュリティグループに紐付け
   security_group_id = "${aws_security_group.terraform_prometheus_SG.id}"
@@ -88,9 +78,7 @@ resource "aws_security_group_rule" "alertmanager_ingress" {
   from_port   = 9093
   to_port     = 9093
   protocol    = "tcp"
-  cidr_blocks = [
-    "0.0.0.0/0"
-  ]
+  cidr_blocks = "${var.MyIP}"
 
   # ここでweb_serverセキュリティグループに紐付け
   security_group_id = "${aws_security_group.terraform_prometheus_SG.id}"
@@ -102,9 +90,7 @@ resource "aws_security_group_rule" "blackbox_exporter_ingress" {
   from_port   = 9115
   to_port     = 9115
   protocol    = "tcp"
-  cidr_blocks = [
-    "0.0.0.0/0"
-  ]
+  cidr_blocks = "${var.MyIP}"
 
   # ここでweb_serverセキュリティグループに紐付け
   security_group_id = "${aws_security_group.terraform_prometheus_SG.id}"
@@ -116,9 +102,7 @@ resource "aws_security_group_rule" "grok_exporter_ingress" {
   from_port   = 9144
   to_port     = 9144
   protocol    = "tcp"
-  cidr_blocks = [
-    "0.0.0.0/0"
-  ]
+  cidr_blocks = "${var.MyIP}"
 
   # ここでweb_serverセキュリティグループに紐付け
   security_group_id = "${aws_security_group.terraform_prometheus_SG.id}"
@@ -130,9 +114,7 @@ resource "aws_security_group_rule" "test_httpserver_ingress1" {
   from_port   = 8080
   to_port     = 8080
   protocol    = "tcp"
-  cidr_blocks = [
-    "0.0.0.0/0"
-  ]
+  cidr_blocks = "${var.MyIP}"
 
   # ここでweb_serverセキュリティグループに紐付け
   security_group_id = "${aws_security_group.terraform_prometheus_SG.id}"
@@ -144,11 +126,8 @@ resource "aws_security_group_rule" "test_httpserver_ingress2" {
   from_port   = 8081
   to_port     = 8081
   protocol    = "tcp"
-  cidr_blocks = [
-    "0.0.0.0/0"
-  ]
+  cidr_blocks = "${var.MyIP}"
 
   # ここでweb_serverセキュリティグループに紐付け
   security_group_id = "${aws_security_group.terraform_prometheus_SG.id}"
 }
-

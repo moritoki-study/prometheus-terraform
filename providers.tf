@@ -10,6 +10,6 @@ terraform {
 
 # 自分の.awsを見ればわかる。東京ならこの設定で固定で良いと思う
 provider "aws" {
-  profile = "default"
-  region = "ap-northeast-1"
+  profile = var.profile
+  region = var.region
 }
